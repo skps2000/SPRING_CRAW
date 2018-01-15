@@ -42,6 +42,7 @@ public class WebDataController {
 		log.info("|    URL :: " + url + "    |");
 		log.info("=========================================== END");
 
+		//THIS IS CRAW
         crawler.setUrlFilter(new SameWebsiteOnlyFilter(url));
         crawler.setPageProcessor(null); // set an IPageProcessor instance here.
         crawler.addUrl(url);
