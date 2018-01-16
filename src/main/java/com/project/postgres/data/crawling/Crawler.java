@@ -48,7 +48,7 @@ public class Crawler {
         this.urlsToCrawl.add(url);
     }
     
-    public int crawl(int limitSize) {
+    public int crawl(int limitSize, ArrayList<String> imgList) {
 
     	long curSize = 0;
         long startTime = System.currentTimeMillis();
@@ -92,6 +92,7 @@ public class Crawler {
                         	log.info(image.attr("src"));
                         	pMap.put("fileName", image.attr("src").toString());
                         	sqlSession.insert("BbsMapper.insertBbsFile", pMap);
+                        	imgList.add(pMap.get("fileName").toString());
                         }
                         
                         Elements elements = doc.select("a");

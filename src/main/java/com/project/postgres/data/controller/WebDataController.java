@@ -1,6 +1,14 @@
 package com.project.postgres.data.controller;
 
+import static org.mockito.Matchers.intThat;
+
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -37,12 +45,15 @@ public class WebDataController {
 	
 	@RequestMapping(value="main/craw", method={RequestMethod.POST, RequestMethod.GET})
 	@ResponseBody
-	public String crawl(@RequestParam(name="url"
+	public void crawl(@RequestParam(name="url"
 									, defaultValue="http://www.ygosu.com/community/yeobgi"
 									, required=false) String url
 					   ,@RequestParam(name="size"
 					   				, defaultValue="10") int size
 									, Model model
+									, HttpServletRequest req
+									, HttpServletResponse res
+									, ArrayList<String> imgList
 			) throws Exception{
 		
 		log.info("=========================================== START");
@@ -53,9 +64,17 @@ public class WebDataController {
         crawler.setUrlFilter(new SameWebsiteOnlyFilter(url));
         crawler.setPageProcessor(null); // set an IPageProcessor instance here.
         crawler.addUrl(url);
-        crawler.crawl(size);
+        crawler.crawl(size, imgList);
 		
-		return "It's Done\n" + "COMPLETE : " + size ;
+        PrintWriter out = res.getWriter();
+        out.print("<html> <head><title></title><head>");
+        out.println(size);
+		out.println("<p> It's Done</p> \n" + "<p>COMPLETE : " + size + "<p>" );
+		for(String imgSrc : imgList){
+			out.println("<img src=\"" + imgSrc + "\">");
+		}
+		out.print("</html>");
+		
 	}
 	
 }
