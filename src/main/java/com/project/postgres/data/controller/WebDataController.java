@@ -37,7 +37,13 @@ public class WebDataController {
 	
 	@RequestMapping(value="main/craw", method={RequestMethod.POST, RequestMethod.GET})
 	@ResponseBody
-	public String crawl(@RequestParam(name="url", defaultValue="http://www.ygosu.com/community/yeobgi", required=false) String url, Model model) throws Exception{
+	public String crawl(@RequestParam(name="url"
+									, defaultValue="http://www.ygosu.com/community/yeobgi"
+									, required=false) String url
+					   ,@RequestParam(name="size") int size
+									, Model model
+									
+			) throws Exception{
 		log.info("=========================================== START");
 		log.info("|    URL :: " + url + "    |");
 		log.info("=========================================== END");
@@ -46,9 +52,9 @@ public class WebDataController {
         crawler.setUrlFilter(new SameWebsiteOnlyFilter(url));
         crawler.setPageProcessor(null); // set an IPageProcessor instance here.
         crawler.addUrl(url);
-        crawler.crawl();
+        crawler.crawl(size);
 		
-		return "It's Done";
+		return "It's Done\n" + "COMPLETE : " + size ;
 	}
 	
 }

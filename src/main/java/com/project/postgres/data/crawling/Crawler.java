@@ -48,8 +48,9 @@ public class Crawler {
         this.urlsToCrawl.add(url);
     }
     
-    public void crawl() {
+    public int crawl(int limitSize) {
 
+    	long curSize = 0;
         long startTime = System.currentTimeMillis();
 
         while(this.urlsToCrawl.size() > 0) {
@@ -57,9 +58,7 @@ public class Crawler {
             if (!shouldCrawlUrl(nextUrl)) continue; // skip this URL.
             this.crawledUrls.add(nextUrl);
             try {
-            	
-            	log.info(nextUrl);
-            	
+            	log.info( curSize + " PROCESSING...  " + "URL ::: " + nextUrl);
                 CrawlJob crawlJob = new CrawlJob(nextUrl, this.pageProcessor);
                 crawlJob.addPageProcessor(new IPageProcessor() {
                     @Override
@@ -77,7 +76,6 @@ public class Crawler {
                         
                         log.info( writer );
                         log.info( subJect );
-                        
                         log.info( contents );
                         log.info( date );
                         
@@ -106,8 +104,12 @@ public class Crawler {
                         
                     }
                 });
-
+                
+                curSize ++;
+                if(curSize >= limitSize) break;
+                
                 crawlJob.crawl();
+                
             } catch (Exception e) {
             	log.info("Error crawling URL: " + nextUrl);
                 e.printStackTrace();
@@ -118,6 +120,8 @@ public class Crawler {
         long totalTime = endTime - startTime;
 
         log.info("URL's crawled: " + this.crawledUrls.size() + " in " + totalTime + " ms (avg: " + totalTime / this.crawledUrls.size() + ")");
+        
+        return limitSize;
 
     }
 

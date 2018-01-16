@@ -5,8 +5,9 @@ import java.io.IOException;
 import javax.sql.DataSource;
 
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.mybatis.spring.SqlSessionFactoryBean;
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -20,6 +21,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 public abstract class DatabaseConfiguration {
 	
+	public static final Logger log = LogManager.getLogger(DatabaseConfiguration.class);
 //	public static final String BASE_PACKAGE = "com.project.postgres.data";
 	public static final String MAPPER_LOCATIONS_PATH = "classpath:mappers/*.xml";
 	
@@ -46,6 +48,8 @@ class Db1DatabaseConfig extends DatabaseConfiguration {
 	@Primary
 	public SqlSessionFactory db1SqlSessionFactory(@Qualifier("db1DataSource") DataSource db1DataSource, ApplicationContext applicationContext) throws Exception {
 		SqlSessionFactoryBean sessionFactoryBean = new SqlSessionFactoryBean();
+		log.info("||||||||||||||||||||||| dataSource Login TimeOut |||||||||||||||||||||||");
+		log.info(db1DataSource.getLoginTimeout());
 		configureSqlSessionFactory(sessionFactoryBean, db1DataSource);
 	    return sessionFactoryBean.getObject();
 	} 
