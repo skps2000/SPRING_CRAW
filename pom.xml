@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.project</groupId>
-	<artifactId>DATASUPPLYPROJECT</artifactId>
+	<artifactId>SpringCraw</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 
-	<name>DATASUPPLYPROJECT</name>
+	<name>StringCraw</name>
 	<description>DATA PROVIDE BY Spring Boot</description>
 
 	<parent>

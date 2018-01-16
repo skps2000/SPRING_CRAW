@@ -40,10 +40,11 @@ public class WebDataController {
 	public String crawl(@RequestParam(name="url"
 									, defaultValue="http://www.ygosu.com/community/yeobgi"
 									, required=false) String url
-					   ,@RequestParam(name="size") int size
+					   ,@RequestParam(name="size"
+					   				, defaultValue="10") int size
 									, Model model
-									
 			) throws Exception{
+		
 		log.info("=========================================== START");
 		log.info("|    URL :: " + url + "    |");
 		log.info("=========================================== END");

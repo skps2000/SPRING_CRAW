@@ -34,11 +34,11 @@ public class CrawlerMain {
 //    }
     
     public void main(String url){
-        Crawler crawler  = new Crawler();
-        crawler.setUrlFilter(new SameWebsiteOnlyFilter(url));
-        crawler.setPageProcessor(null); // set an IPageProcessor instance here.
-        crawler.addUrl(url);
-        crawler.crawl();
+//        Crawler crawler  = new Crawler();
+//        crawler.setUrlFilter(new SameWebsiteOnlyFilter(url));
+//        crawler.setPageProcessor(null); // set an IPageProcessor instance here.
+//        crawler.addUrl(url);
+//        crawler.crawl();
     }
     
     
