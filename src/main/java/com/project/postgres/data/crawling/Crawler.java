@@ -20,12 +20,8 @@ import com.project.postgres.data.crawling.util.UrlNormalizer;
 
 /**
  */
-@Component
 public class Crawler {
 
-	@Autowired
-	SqlSession sqlSession;
-	
 	private static final Logger log = LogManager.getLogger(Crawler.class);
 	
     protected IUrlFilter urlFilter     = null;
@@ -85,14 +81,10 @@ public class Crawler {
                         pMap.put("date", date.trim());
                         pMap.put("original", url);
                         
-                        sqlSession.insert("BbsMapper.insertBbs", pMap);
-                        
                         Elements images = doc.select("div.container img");
                         for(Element image : images){
                         	log.info(image.attr("src"));
                         	pMap.put("fileName", image.attr("src").toString());
-                        	sqlSession.insert("BbsMapper.insertBbsFile", pMap);
-                        	imgList.add(pMap.get("fileName").toString());
                         }
                         
                         Elements elements = doc.select("a");
